@@ -1,6 +1,6 @@
 # gin-boilerplate
 
-## Directory Structure
+## Structure
 ```shell
 .
 ├── README.md
@@ -57,9 +57,8 @@ This is just ready for your settings.
 This is for your template files.\
 You must keep directory structure for this boilerplate.\
 If you want to change the structure, you have to change below code.\
-main.go
-{: .small}
 ```go
+        // main.go file
 	r.LoadHTMLGlob("templates/**/*")
 ```
 
