@@ -56,7 +56,7 @@ This is just ready for your settings.
 ***templates***\
 This is for your template files.\
 You must keep directory structure for this boilerplate.\
-If you want to change the structure, you have to change below code.\
+If you want to change the structure, you have to change below code.
 ```go
         // main.go file
 	r.LoadHTMLGlob("templates/**/*")
