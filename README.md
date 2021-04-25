@@ -34,6 +34,8 @@
 │   └── utils
 │       └── utils.go
 ├── main.go
+├── models
+│   └── models.go
 └── templates
     ├── includes
     │   ├── head.gohtml
@@ -65,8 +67,13 @@ This is just ready for your settings.
 ***libs***\
 This is for custom packages in this project.
 
+***models***\
+This is for models for database.\
+You can define a model for your service.\
+In this boilerplate, I use [`GORM`](https://gorm.io) ORM.
+
 ***templates***\
-This is for your template files.\
+This is for your template files.
 
 ## Installed Packages
 
@@ -77,6 +84,9 @@ github.com/go -sql-driver/mysql
 github.com/gorilla/sessions
 github.com/joho/godotenv
 github.com/srinathgs/mysqlstore
+gorm.io/driver/mysql
+gorm.io/driver/sqlite
+gorm.io/gorm
 ```
 
 ## Custom Packages in libs

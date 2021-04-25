@@ -7,6 +7,9 @@ import (
 	"gin-boilerplate/applicatoins/user"
 	"gin-boilerplate/libs/loadtemplates"
 	cfMySQLStore "gin-boilerplate/libs/mysqlstore"
+	"gin-boilerplate/models"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"log"
 	"os"
 	"strconv"
@@ -18,8 +21,8 @@ import (
 
 func main() {
 	// Load .env file
-	err := godotenv.Load()
-	if err != nil {
+	errGoDotEnv := godotenv.Load()
+	if errGoDotEnv != nil {
 		log.Fatal("Error loading .env file")
 	}
 
@@ -31,17 +34,24 @@ func main() {
 	sessionSecretKey := os.Getenv("sessionSecretKey")
 
 	// MySQL session
-	store, err := cfMySQLStore.NewStore(dsn, sessionTable, sessionPath, sessionMaxAge, []byte(sessionSecretKey))
-	if err != nil {
-		panic(err)
+	store, errStore := cfMySQLStore.NewStore(dsn, sessionTable, sessionPath, sessionMaxAge, []byte(sessionSecretKey))
+	if errStore != nil {
+		panic(errStore)
 	}
+
+	// Gorm
+	db, errGorm := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if errGorm != nil {
+		panic(errGorm)
+	}
+	models.Migrate(db)
 
 	// Create route
 	r := gin.Default()
 	// Session
 	r.Use(sessions.Sessions("CF_SESSION", store))
 	// Static files
-	r.Static("/assets", "./assets")
+	r.Static("/static", "./assets")
 	// Load templates
 	files := loadtemplates.GetFiles("templates")
 	r.LoadHTMLFiles(files...)
